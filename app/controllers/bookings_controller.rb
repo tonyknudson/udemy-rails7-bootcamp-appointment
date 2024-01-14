@@ -1,5 +1,5 @@
 class BookingsController < ApplicationController
-    before_action :set_booking, only: %i[show]
+    before_action :set_booking, only: %i[show edit update]
     def index
         @bookings = Booking.all
     end
@@ -22,6 +22,19 @@ class BookingsController < ApplicationController
         end
     end
 
+    def edit
+    end
+
+    def update
+        respond_to do |format|
+            if @booking.update(booking_params)
+                format.html { redirect_to booking_url(@booking), notice: "Booking updated successfully" }
+            else
+                format.html { render :edit, status: :unprocessable_entity }
+            end
+        end
+    end
+    
     private
     
     def set_booking
