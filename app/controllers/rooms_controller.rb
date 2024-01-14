@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-    before_action :set_room, only: %i[show edit update]
+    before_action :set_room, only: %i[show edit update destroy]
     def index
         @rooms = Room.all
     end
@@ -33,6 +33,13 @@ class RoomsController < ApplicationController
                 format.html { render :edit, status: :unprocessable_entity }
             end
         end
+    end
+
+    def destroy
+      @room.destroy
+      respond_to do |format|
+        format.html { redirect_to rooms_url, notice: "Room was deleted successfully" }
+      end
     end
 
     private
